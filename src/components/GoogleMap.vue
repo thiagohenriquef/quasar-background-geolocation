@@ -31,13 +31,14 @@
   export default {
     name: 'GoogleMap',
     props: {
-      type: Array,
-      default: () => [{ position: { lat: -18.930763, lng: -48.235862 }}]
+      markers: {
+        type: Array,
+        default: () => []
+      }
     },
     data () {
       return {
         center: { lat: -18.930763, lng: -48.235862 },
-        markers: [{ position: { lat: -18.930763, lng: -48.235862 }}],
         places: [],
         currentPlace: null
       }
@@ -70,6 +71,11 @@
             lng: position.coords.longitude
           }
         })
+      }
+    },
+    mounted () {
+      if (this.markers && this.markers.length) {
+        this.center = this.markers[0].position
       }
     }
   }

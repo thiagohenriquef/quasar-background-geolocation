@@ -42,20 +42,6 @@ module.exports = function (ctx) {
     // framework: 'all' --- includes everything; for dev only!
     framework: {
       components: [
-        'QLayout',
-        'QLayoutHeader',
-        'QLayoutDrawer',
-        'QPageContainer',
-        'QPage',
-        'QToolbar',
-        'QToolbarTitle',
-        'QBtn',
-        'QIcon',
-        'QList',
-        'QListHeader',
-        'QItem',
-        'QItemMain',
-        'QItemSide'
       ],
       directives: [
         'Ripple'

@@ -1,6 +1,7 @@
 <template>
   <q-page class="justify-center">
-    <google-map />
+    <google-map
+      :markers="markers"/>
   </q-page>
 </template>
 
@@ -21,21 +22,40 @@ export default {
   },
   data () {
     return {
-      batteryStatus: null,
       markers: []
     }
   },
   methods: {
     updateBatteryStatus (status) {
       this.batteryStatus = status.level
+    },
+    findLocations () {
+      this.$axios
+        .get('https://background-geolocation-quasar.herokuapp.com/geolocalizacao/')
+        .then(res => {
+          res.data.forEach(el => {
+            this.markers.push({
+              position: {
+                lat: Number(el.latitude),
+                lng: Number(el.longitude)
+              }
+            })
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   created () {
-    document.addEventListener('batterystatus', this.updateBatteryStatus, false)
-    document.addEventListener('deviceready', this.onDeviceReady, false)
+    if (window.cordova) {
+      document.addEventListener('deviceready', this.onDeviceReady, false)
+    }
+  },
+  mounted () {
+    this.findLocations()
   },
   beforeDestroy () {
-    document.removeEventListener('batterystatus')
     document.removeEventListener('deviceready')
   }
 }

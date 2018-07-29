@@ -1,35 +1,41 @@
 export default {
   data () {
     return {
-      configuration: {
-        locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
-        desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
-        stationaryRadius: 5,
-        distanceFilter: 1,
-        notificationTitle: 'Localização',
-        notificationText: 'este aplicativo necessita da sua localizacao',
-        debug: true,
-        interval: 5000,
-        fastestInterval: 5000,
-        activitiesInterval: 1000,
-        stopOnTerminate: false,
-        startForeground: true,
-        startOnBoot: true,
-        stopOnStillActivity: false,
-        url: 'http://192.168.1.9:3000/objetivos',
-        syncUrl: 'http://192.168.1.9:3000/objetivos',
-        httpHeaders: {
-          'X-FOO': 'bar'
-        },
-        postTemplate: {
-          lat: '@latitude',
-          lon: '@longitude',
-          horario: new Date()
-        }
-      }
+      configuration: this.setConfiguration()
     }
   },
   methods: {
+    setConfiguration () {
+      if (window.cordova) {
+        return {
+          locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
+          desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
+          stationaryRadius: 10,
+          distanceFilter: 10,
+          notificationTitle: 'Localização',
+          notificationText: 'Este aplicativo necessita da sua localização',
+          debug: false,
+          interval: 5000,
+          fastestInterval: 5000,
+          activitiesInterval: 1000,
+          stopOnTerminate: false,
+          startForeground: true,
+          startOnBoot: true,
+          stopOnStillActivity: false,
+          url: 'https://background-geolocation-quasar.herokuapp.com/geolocalizacao/',
+          syncUrl: 'https://background-geolocation-quasar.herokuapp.com/geolocalizacao/',
+          httpHeaders: {
+            'X-FOO': 'bar'
+          },
+          postTemplate: {
+            latitude: '@latitude',
+            longitude: '@longitude',
+            horario: new Date()
+          }
+        }
+      }
+      return {}
+    },
     onDeviceReady () {
       BackgroundGeolocation.configure(this.configuration)
 
