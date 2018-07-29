@@ -10,8 +10,8 @@ export default {
         return {
           locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
           desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
-          stationaryRadius: 10,
-          distanceFilter: 10,
+          stationaryRadius: 15,
+          distanceFilter: 15,
           notificationTitle: 'Localização',
           notificationText: 'Este aplicativo necessita da sua localização',
           debug: false,
@@ -43,7 +43,6 @@ export default {
         // handle your locations here
         // to perform long running operation on iOS
         // you need to create background task
-        console.log('entrei no location', location)
         BackgroundGeolocation.startTask(function (taskKey) {
           console.log(location)
           console.log(taskKey)
@@ -68,11 +67,6 @@ export default {
 
       BackgroundGeolocation.on('start', function () {
         console.log('[INFO] BackgroundGeolocation service has been started')
-      })
-
-      BackgroundGeolocation.getLocations(locations => {
-        console.log('entrei aqui')
-        console.log(locations)
       })
 
       BackgroundGeolocation.on('stop', () => {
